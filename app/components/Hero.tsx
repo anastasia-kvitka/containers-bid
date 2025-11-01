@@ -5,12 +5,39 @@ import { useState } from "react";
 
 export default function Hero() {
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [error, setError] = useState("");
   const [link, setLink] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  function validateEmail(e: string) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(e);
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ email, link });
-    alert(`Email: ${email}\nLink: ${link}`);
+    setStatus("loading");
+    console.log("Submitting email:", email);
+
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        console.log("Email submitted successfully");
+      } else {
+        const err = await res.text();
+        setStatus("error");
+        console.error("Server error:", err);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      setStatus("error");
+    }
   };
 
   return (
@@ -34,18 +61,26 @@ export default function Hero() {
             <div className="flex gap-2">
               <input
                 type="email"
-                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
                 required
-                className="flex-1 border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="border border-gray-300 px-4 py-3 flex-1 focus:ring-2 focus:ring-brand"
               />
               <button
                 type="submit"
                 className="bg-brand text-white px-6 py-3 font-semibold hover:bg-green-600 transition-all"
               >
-                Get Started Free
+                {status === "loading" ? "Sending..." : "Get Started Free"}
               </button>
+              {status === "sent" && (
+                <p className="text-green-600 mt-2">Email sent successfully!</p>
+              )}
+              {status === "error" && (
+                <p className="text-red-600 mt-2">
+                  Something went wrong. Try again.
+                </p>
+              )}
             </div>
 
             <div className="flex gap-2 items-center">

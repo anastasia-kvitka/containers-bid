@@ -120,7 +120,7 @@ export default function Hero() {
             {/* Floating label */}
             <div className="absolute bottom-6 left-6 bg-white shadow-lg rounded-lg px-4 py-2">
               <p className="text-sm text-gray-500">Estimated Value</p>
-              <p className="text-2xl font-semibold text-brand">$1,247</p>
+              <p className="text-2xl font-semibold text-brand">$3,427</p>
             </div>
           </div>
         </div>

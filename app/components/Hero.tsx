@@ -50,11 +50,12 @@ export default function Hero() {
             FREE for First Bid
           </p>
           <h2 className="text-4xl md:text-6xl font-extrabold leading-tight">
-            Turn your storage into <span className="text-brand">Cash</span>
+            Turn your storage finds into{" "}
+            <span className="text-brand">Cash</span>
           </h2>
           <p className="mt-6 text-lg text-gray-600 max-w-md">
-            AI finds your items on eBay in seconds. Get instant price estimates
-            and start making profit today.
+            Our AI identifies your items in moments, giving you instant price
+            insights and helping you start earning faster.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-4">

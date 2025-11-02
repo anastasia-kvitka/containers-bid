@@ -87,17 +87,11 @@ export default function Hero() {
             <div className="flex gap-2 items-center">
               <input
                 type="url"
-                placeholder="Or paste image link here"
+                placeholder="Paste link to your auction here (optional)"
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
                 className="flex-1 border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-orange-500 focus:outline-none"
               />
-              <button
-                type="button"
-                className="border border-gray-300 px-6 py-3 hover:border-brand hover:text-brand transition-all"
-              >
-                Upload image
-              </button>
             </div>
           </form>
 

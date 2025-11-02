@@ -1,9 +1,10 @@
+import link from "next/link";
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(req: NextRequest) {
   const { email } = await req.json();
@@ -15,8 +16,20 @@ export async function POST(req: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: "ivan@warptechnologies.tech",
       to: process.env.NOTIFY_EMAIL!,
-      subject: "New Bid13AIBot Lead",
-      html: `<p>New potential client: ${email}</p>`,
+      subject: "New Bid13AIBot Submission",
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.5;">
+          <h2>New Form Submission</h2>
+          <p><strong>Email:</strong> ${email}</p>
+          ${
+            link
+              ? `<p><strong>Auction Link:</strong> <a href="${link}">${link}</a></p>`
+              : `<p><em>No auction link provided</em></p>`
+          }
+          <hr />
+          <p style="font-size: 12px; color: #777;">Sent automatically from your website form.</p>
+        </div>
+      `,
     });
 
     // Optional: send confirmation to user

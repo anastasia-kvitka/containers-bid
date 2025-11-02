@@ -16,6 +16,10 @@ export default function Hero() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
     setStatus("loading");
     console.log("Submitting email:", email);
 
@@ -23,7 +27,7 @@ export default function Hero() {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, link }),
       });
 
       if (res.ok) {
@@ -41,15 +45,15 @@ export default function Hero() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center bg-white text-gray-900">
+    <main className="min-h-screen flex flex-col items-center bg-white text-gray-900 pb-12 md:pb-20">
       {/* Hero Section */}
-      <section className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl mt-8 md:mt-16 gap-10">
+      <section className="pt-24 flex flex-col md:flex-row items-center justify-between w-full max-w-6xl mx-auto px-4 md:px-6 mt-6 md:mt-16 gap-8">
         {/* Left */}
         <div className="flex-1 space-y-6">
           <p className="text-gray-400 font-medium uppercase">
             FREE for First Bid
           </p>
-          <h2 className="text-4xl md:text-6xl font-extrabold leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight">
             Turn your storage finds into{" "}
             <span className="text-brand">Cash</span>
           </h2>
@@ -59,22 +63,35 @@ export default function Hero() {
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 required
-                className="border border-gray-300 px-4 py-3 flex-1 focus:ring-2 focus:ring-brand"
+                className="border border-gray-300 px-4 py-3 flex-1 w-full focus:ring-2 focus:ring-brand focus:outline-none"
               />
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-2 w-full">
+              <input
+                type="url"
+                placeholder="Paste link to your auction here (optional)"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+                className="flex-1 border border-gray-300 px-4 py-3 w-full focus:ring-2 focus:ring-brand focus:outline-none"
+              />
+            </div>
+
+            <div className="flex gap-2 items-center">
               <button
                 type="submit"
-                className="bg-brand text-white px-6 py-3 font-semibold hover:bg-green-600 transition-all"
+                className="w-full sm:w-auto bg-brand text-white px-6 py-3 font-semibold hover:bg-green-600 transition-all"
               >
                 {status === "loading" ? "Sending..." : "Get Started Free"}
               </button>
-              {status === "sent" && (
+              {status === "success" && (
                 <p className="text-green-600 mt-2">Email sent successfully!</p>
               )}
               {status === "error" && (
@@ -82,16 +99,6 @@ export default function Hero() {
                   Something went wrong. Try again.
                 </p>
               )}
-            </div>
-
-            <div className="flex gap-2 items-center">
-              <input
-                type="url"
-                placeholder="Paste link to your auction here (optional)"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-                className="flex-1 border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-orange-500 focus:outline-none"
-              />
             </div>
           </form>
 
@@ -110,7 +117,7 @@ export default function Hero() {
               alt="Smart storage container"
               width={600}
               height={400}
-              className="rounded-2xl shadow-xl"
+              className="w-full h-auto rounded-2xl shadow-xl"
             />
             {/* Floating label */}
             <div className="absolute bottom-6 left-6 bg-white shadow-lg rounded-lg px-4 py-2">

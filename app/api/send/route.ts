@@ -1,4 +1,3 @@
-import link from "next/link";
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
@@ -7,7 +6,7 @@ export const runtime = "nodejs";
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(req: NextRequest) {
-  const { email } = await req.json();
+  const { email, link } = await req.json();
 
     if (!email || typeof email !== "string") {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
@@ -23,7 +22,7 @@ export async function POST(req: NextRequest) {
           <p><strong>Email:</strong> ${email}</p>
           ${
             link
-              ? `<p><strong>Auction Link:</strong> <a href="${link}">${link}</a></p>`
+              ? `<p><strong>Auction Link:</strong> <a href="${link}" target="_blank">${link}</a></p>`
               : `<p><em>No auction link provided</em></p>`
           }
           <hr />

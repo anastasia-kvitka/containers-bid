@@ -1,13 +1,13 @@
-import { Upload, Brain, DollarSign } from "lucide-react";
+import { Brain, DollarSign, Link } from "lucide-react";
 
 export default function HowItWorks() {
   const steps = [
     {
       id: 1,
-      icon: <Upload className="w-10 h-10 text-brand" />,
+      icon: <Link className="w-10 h-10 text-brand" />,
       step: "STEP 1",
-      title: "Upload Photo",
-      description: "Take a picture of your items or paste a link",
+      title: "Paste a Link",
+      description: "Enter your email and paste a link to your auction",
     },
     {
       id: 2,

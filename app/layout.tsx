@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Containers Bid",
-  description: "Turn Storage Into Cash",
+  title: "Bid13AIBot",
+  description: "Turn Storage Finds Into Cash",
 };
 
 export default function RootLayout({

@@ -3,6 +3,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HowItWorks from "./components/HowItWorks";
 import FeatureHighlight from "./components/FeatureHighlight";
+import Contact from "./components/Contact";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <Hero />
       <HowItWorks />
       <FeatureHighlight />
+      <Contact />
       <Footer />
     </>
   );
